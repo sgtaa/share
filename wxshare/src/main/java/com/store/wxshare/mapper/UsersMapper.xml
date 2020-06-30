@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.store.wxshare.mapper.UsersMapper">
+
+    <!--查询用户信息与积分-->
+    <resultMap id="ResultMap" type="com.store.wxshare.entity.Users">
+        <id column="userid" property="userid" jdbcType="VARCHAR" />
+        <result column="ename" property="ename" jdbcType="VARCHAR" />
+        <result column="detailed_address" property="detailedAddress" jdbcType="VARCHAR" />
+        <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+        <association property="integral" javaType="com.store.wxshare.entity.Integral">
+            <id column="userid" property="userid" jdbcType="VARCHAR" />
+            <result column="grade" property="grade" jdbcType="INTEGER" />
+        </association>
+    </resultMap>
+    <select id="selectuserIntegralById" resultMap="ResultMap">
+        SELECT u.ENAME,u.NICK_NAME,u.MOBILE,u.DETAILED_ADDRESS,u.EMAIL,i.GRADE from
+        share_user u,share_integral i WHERE u.USERID = i.USERID AND u.USERID =#{userid}
+    </select>
+</mapper>
